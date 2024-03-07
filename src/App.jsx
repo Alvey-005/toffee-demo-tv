@@ -1,7 +1,12 @@
+import SideNav from "./components/ui/SideNav"
+
 function App() {
 
   return (
-    <div className='h-screen flex flex-col items-center justify-center'> Hello</div>
+    <div>
+      <SideNav/>
+      Hello
+    </div>
   )
 }
 
