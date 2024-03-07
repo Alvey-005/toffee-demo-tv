@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+    background: var(--ATV-BG-Gradient, linear-gradient(252deg, #000 0%, #3E003B 100%));
+}
