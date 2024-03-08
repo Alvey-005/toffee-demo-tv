@@ -4,8 +4,10 @@ import SingleNavLink from "../custom/SingleNavLink";
 import TvSvg from "../../assets/TvSvg";
 import MovieSvg from "../../assets/MovieSvg";
 import InfoSvg from "../../assets/InfoSvg";
+import { TestDataContext } from "../../providers/TestDataProvider";
 
 const SideNav = () => {
+  const { data, setData } = TestDataContext();
   return (
     <SideNavLayout>
       <SingleNavLink active={true} >
