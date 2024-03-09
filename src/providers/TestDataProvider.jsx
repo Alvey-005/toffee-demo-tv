@@ -8,7 +8,10 @@ const { Provider: TestDataProvider, useContext: useTestDataContext } = createSaf
 // Create a provider component
 const TestDataProviderWrapper = ({ children }) => {
     // Define your state variables here
-    const [data, setData] = useState(MovieData);
+    const [data, setData] = useState({
+        location: 'nav',
+        MovieData
+    });
 
     // Return the context provider with the state and functions
     return (

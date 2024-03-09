@@ -1,15 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { TestDataContext } from '../../providers/TestDataProvider';
 
-function CardGrid({ movieData }) {
-  const numCards = movieData.length;
+function CardGrid({}) {
+  const { data, setData } = TestDataContext();
+  const numCards = data.MovieData.length;
   const numColumns = 4;
   const numRows = Math.ceil(numCards / numColumns);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const activeCardRef = useRef(null);
-  const { data, setData } = TestDataContext();
-
-  console.log(data);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -17,6 +15,8 @@ function CardGrid({ movieData }) {
         case 'ArrowLeft':
           if (activeCardIndex % numColumns !== 0) {
             setActiveCardIndex((prevIndex) => prevIndex - 1);
+          } else {
+            setData({ ...data, location: 'nav' });
           }
           break;
         case 'ArrowRight':
@@ -33,6 +33,9 @@ function CardGrid({ movieData }) {
           if (activeCardIndex + numColumns < numCards) {
             setActiveCardIndex((prevIndex) => prevIndex + numColumns);
           }
+          break;
+        case 'Enter':
+          setData({ ...data, location: 'video'});
           break;
         default:
           break;
@@ -55,31 +58,35 @@ function CardGrid({ movieData }) {
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('wheel', handleMouseScroll); // Use 'wheel' for wider compatibility
+    if (data.location === 'movie') {
+      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('wheel', handleMouseScroll);
+    }
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('wheel', handleMouseScroll);
+      if (data.location === 'movie') {
+        document.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('wheel', handleMouseScroll);
+      }
     };
-  }, [activeCardIndex, numColumns, numCards]);
+  }, [activeCardIndex, numColumns, numCards, data, setData]);
 
   useEffect(() => {
-    if (activeCardRef.current) {
+    if (activeCardRef.current && data.location === 'movie') {
       activeCardRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
-  }, [activeCardIndex]);
+  }, [activeCardIndex, data]);
 
   return (
-    <div className="grid grid-cols-4 gap-4 h-screen">
-      {data.map((data, index) => (
+    <div className="grid grid-cols-4 gap-3 h-[80vh]">
+      {data.MovieData.map((p, index) => (
         <div
           key={index}
           ref={index === activeCardIndex ? activeCardRef : null}
           className={`card flex justify-center items-center bg-gray-200 aspect-video rounded-md shadow-md transition-transform duration-300 transform hover:scale-105 `}
           onClick={() => setActiveCardIndex(index)}
         >
-          <img src={data.image} className={`w-full h-full rounded-md ${activeCardIndex === index ? 'border-4 border-[#FF3988]' : ''}`} />
+          <img src={p.image} className={`w-full h-full rounded-md ${data.location === 'movie' && activeCardIndex === index ? 'border-4 border-[#FF3988]' : ''}`} />
         </div>
       ))}
     </div>

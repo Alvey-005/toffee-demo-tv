@@ -1,21 +1,35 @@
-import React, { useState } from 'react';
-import SideNav from "./components/ui/SideNav"
-import CardGrid from './components/ui/Card';
-import { MovieData } from './data';
-import { TestDataProvider } from './providers/TestDataProvider.jsx';
+import React, { useState } from "react";
+import SideNav from "./components/ui/SideNav";
+import CardGrid from "./components/ui/Card";
+import { MovieData } from "./data";
+import { TestDataContext } from "./providers/TestDataProvider";
+import Video from "./components/ui/video";
 
 function App() {
-  return (
-    <TestDataProvider>
-      <div>
-        <SideNav />
-        <div className="ml-16 mr-8 overflow-hidden mt-5">
-          <CardGrid movieData={MovieData} />
+  const { data, setData } = TestDataContext();
+  console.log("app", data);
+  return data.location !== "video" ? (
+    <div className="">
+      <SideNav />
+      <div className="ml-20 mr-8 mt-8">
+        <div>
+          <div className="mb-1 flex justify-end">
+            <img src="./svg/toffee.svg" />
+          </div>
+          <div className="mb-[18px] text-xl text-[#E6EEF9]">Dramas & Series</div>
+        </div>
+        <div>
+          <div className=" overflow-hidden">
+            <CardGrid movieData={MovieData} />
+          </div>
         </div>
       </div>
-    </TestDataProvider>
-
-  )
+    </div>
+  ) : (
+    <div>
+      <Video />
+    </div>
+  );
 }
 
-export default App
+export default App;
