@@ -4,14 +4,30 @@ import SingleNavLink from "../custom/SingleNavLink";
 import TvSvg from "../../assets/TvSvg";
 import MovieSvg from "../../assets/MovieSvg";
 import InfoSvg from "../../assets/InfoSvg";
-import { TestDataContext } from "../../providers/TestDataProvider";
+import { DataContext } from "../../providers/DataProvider";
 import { MovieData, TvData } from "../../data";
 
 const SideNav = () => {
-  const { data, setData } = TestDataContext();
-  const [activeIndex, setActiveIndex] = useState(0);
-  console.log(data, activeIndex);
+  const { data, setData } = DataContext();
+  const [activeIndex, setActiveIndex] = useState(data.activeCategory);
   const exData = [MovieData, TvData, MovieData];
+  const navItemList = [
+    {
+      id: "drama",
+      name: "Drama",
+      icon: <TvSvg />,
+    },
+    {
+      id: "movies",
+      name: "Movies",
+      icon: <MovieSvg />,
+    },
+    {
+      id: "info",
+      name: "Info",
+      icon: <InfoSvg />,
+    },
+  ];
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -24,10 +40,14 @@ const SideNav = () => {
           setActiveIndex((prevIndex) => Math.min(2, prevIndex + 1));
           break;
         case "ArrowRight":
-          setData({ ...data, location: "movie", MovieData: exData[activeIndex] });
+          setData({
+            ...data,
+            location: "movie",
+            MovieData: exData[activeIndex],
+          });
           break;
         case "Enter":
-          setData({ ...data, MovieData: exData[activeIndex] });
+          setData({ ...data, location: "movie", activeCategory: activeIndex });
           break;
         default:
           break;
@@ -41,19 +61,22 @@ const SideNav = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [data.location, activeIndex]);
+  }, [data.location,data.activeCategory, activeIndex]);
 
   return (
     <SideNavLayout>
-      <SingleNavLink active={activeIndex === 0}>
-        <TvSvg />
-      </SingleNavLink>
-      <SingleNavLink active={activeIndex === 1}>
-        <MovieSvg />
-      </SingleNavLink>
-      <SingleNavLink active={activeIndex === 2}>
-        <InfoSvg />
-      </SingleNavLink>
+      {navItemList.map((item, index) => (
+        <SingleNavLink key={item.id} active={activeIndex === index}>
+          {item.icon}
+          <div
+            className={`text-xl absolute ${activeIndex === index ? "text-[#FF3988]" : "text-white"} ${
+              data.location === "nav" ? "left-16 opacity-100" : "-left-16 opacity-0"
+            } transition-all duration-500 ease-in-out`}
+          >
+            {item.name}
+          </div>
+        </SingleNavLink>
+      ))}
     </SideNavLayout>
   );
 };

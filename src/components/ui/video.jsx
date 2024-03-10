@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
-import { TestDataContext } from '../../providers/TestDataProvider';
+import { DataContext } from '../../providers/DataProvider';
 import {formatTime,getTimePercentage} from '../../lib/helper';
 const Video = () => {
-    const { data, setData } = TestDataContext();
+    const { data, setData } = DataContext();
     const videoPlayer = useRef(null);
     const [currentTime,setCurrentTime] = useState(0);
     const [duration,setDuration] = useState(0);
@@ -76,7 +76,7 @@ const Video = () => {
                     player.volume(player.volume() - .10);
                     break;
                 case 'Escape':
-                    setData({ ...data, location: 'nav' });
+                    setData({ ...data, location: 'movie' });
                     player.dispose();
                     break;
                 case 'Enter':

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { TestDataContext } from '../../providers/TestDataProvider';
+import { DataContext } from '../../providers/DataProvider';
+import {serverData } from '../../data'
 
 function CardGrid({}) {
-  const { data, setData } = TestDataContext();
-  const numCards = data.MovieData.length;
+  const { data, setData } = DataContext();
+  const numCards = serverData[data.activeCategory].length;
   const numColumns = 4;
-  const numRows = Math.ceil(numCards / numColumns);
-  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const [activeCardIndex, setActiveCardIndex] = useState(data.activeCategoryIndex);
   const activeCardRef = useRef(null);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function CardGrid({}) {
           }
           break;
         case 'Enter':
-          setData({ ...data, location: 'video'});
+          setData({ ...data, location: 'video',activeCategoryIndex: activeCardIndex});
           break;
         default:
           break;
@@ -79,14 +79,14 @@ function CardGrid({}) {
 
   return (
     <div className="grid grid-cols-4 gap-3 h-[80vh]">
-      {data.MovieData.map((p, index) => (
+      {serverData[data.activeCategory].map((p, index) => (
         <div
           key={index}
           ref={index === activeCardIndex ? activeCardRef : null}
-          className={`card flex justify-center items-center bg-gray-200 aspect-video rounded-md shadow-md transition-transform duration-300 transform hover:scale-105 `}
+          className={`card flex justify-center items-center bg-gray-200 aspect-video rounded-md shadow-md transition-transform duration-300 transform `}
           onClick={() => setActiveCardIndex(index)}
         >
-          <img src={p.image} className={`w-full h-full rounded-md ${data.location === 'movie' && activeCardIndex === index ? 'border-4 border-[#FF3988]' : ''}`} />
+          <img src={p.image} className={`w-full h-full rounded-md ${data.location === 'movie' && activeCardIndex === index ? 'border-4 border-[#FF3988]' : ''} hover:border-4 hover:border-[#FF398860]/60 `} />
         </div>
       ))}
     </div>

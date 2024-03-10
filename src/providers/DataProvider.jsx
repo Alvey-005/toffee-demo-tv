@@ -3,22 +3,24 @@ import createSafeContext from '../lib/createSafeContext';
 import { MovieData } from '../data';
 
 // Create a new context
-const { Provider: TestDataProvider, useContext: useTestDataContext } = createSafeContext();
+const { Provider: DataProvider, useContext: useDataContext } = createSafeContext();
 
 // Create a provider component
-const TestDataProviderWrapper = ({ children }) => {
+const DataProviderWrapper = ({ children }) => {
     // Define your state variables here
     const [data, setData] = useState({
-        location: 'nav',
+        location: 'movie',
+        activeCategory: 0,
+        activeCategoryIndex:0,
         MovieData
     });
 
     // Return the context provider with the state and functions
     return (
-        <TestDataProvider value={{ data, setData }}>
+        <DataProvider value={{ data, setData }}>
             {children}
-        </TestDataProvider>
+        </DataProvider>
     );
 };
 
-export { TestDataProviderWrapper as TestDataProvider, useTestDataContext as TestDataContext };
+export { DataProviderWrapper as DataProvider, useDataContext as DataContext };

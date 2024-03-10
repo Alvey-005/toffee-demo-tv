@@ -2,37 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
-    background: var(--ATV-BG-Gradient, linear-gradient(252deg, #000 0%, #3E003B 100%));
+:root {
+  background: var(
+    --ATV-BG-Gradient,
+    linear-gradient(252deg, #000 0%, #3e003b 100%)
+  );
 }
-
-hello {
-    @apply border shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] border-solid border-black;
-    background: linear-gradient(90deg, #130016 0%, rgba(19, 0, 22, 0) 164.91%);
-  }
-  
-  .nav-link{
-    width: 100%;
-  }
-  .active>svg , .active>svg path {
-    fill: #FF3988; /* Change the color to your desired color */
-  }
-  .active{
-    position: relative;
-  }
-  .active::after {
-    content: "";
-    background: #FF3988;
-    /* box-shadow: 0 0 25px 6px #e50914, 0 0 15px 6px #e50914 inset; */
-    width: 3px;
-    height: 100%;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  .activeCard{
-    background: #FF3988;
-    border: 6px solid #FF3988;
-    transition: all 0.3s ease;
-  }
+.active > svg,
+.active > svg path {
+  fill: #ff3988; /* Change the color to your desired color */
+}
+.activeCard {
+  background: #ff3988;
+  border: 6px solid #ff3988;
+  transition: all 0.3s ease;
+}

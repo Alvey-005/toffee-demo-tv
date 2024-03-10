@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import SideNav from "./components/ui/SideNav";
 import CardGrid from "./components/ui/Card";
 import { MovieData } from "./data";
-import { TestDataContext } from "./providers/TestDataProvider";
+import { DataContext } from "./providers/DataProvider";
 import Video from "./components/ui/video";
 
 function App() {
-  const { data, setData } = TestDataContext();
+  const { data, setData } = DataContext();
   console.log("app", data);
   return data.location !== "video" ? (
     <div className="">
@@ -20,7 +20,7 @@ function App() {
         </div>
         <div>
           <div className=" overflow-hidden">
-            <CardGrid movieData={MovieData} />
+            <CardGrid/>
           </div>
         </div>
       </div>
