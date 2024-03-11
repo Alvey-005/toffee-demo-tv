@@ -10,7 +10,6 @@ import { MovieData, TvData } from "../../data";
 const SideNav = () => {
   const { data, setData } = DataContext();
   const [activeIndex, setActiveIndex] = useState(data.activeCategory);
-  const exData = [MovieData, TvData, MovieData];
   const navItemList = [
     {
       id: "drama",
@@ -31,23 +30,26 @@ const SideNav = () => {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      console.log(event.key);
       switch (event.key) {
         case "ArrowUp":
-          setActiveIndex((prevIndex) => Math.max(0, prevIndex - 1));
+          setActiveIndex((prevIndex) => {
+            const newIndex = Math.max(0, prevIndex - 1);
+            return newIndex;
+          });
+          setData({ ...data, activeCategory: Math.max(0, activeIndex - 1),activeCategoryIndex:0 }); // Update setData immediately
           break;
         case "ArrowDown":
-          setActiveIndex((prevIndex) => Math.min(2, prevIndex + 1));
+          setActiveIndex((prevIndex) => {
+            const newIndex = Math.min(2, prevIndex + 1);
+            return newIndex;
+          });
+          setData({ ...data, activeCategory: Math.min(2, activeIndex + 1),activeCategoryIndex:0 }); // Update setData immediately
           break;
         case "ArrowRight":
-          setData({
-            ...data,
-            location: "movie",
-            MovieData: exData[activeIndex],
-          });
+          setData({ ...data, location: "movie", activeCategory: activeIndex,activeCategoryIndex:0 });
           break;
         case "Enter":
-          setData({ ...data, location: "movie", activeCategory: activeIndex });
+          setData({ ...data, location: "movie", activeCategory: activeIndex,activeCategoryIndex:0 });
           break;
         default:
           break;
@@ -61,7 +63,7 @@ const SideNav = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [data.location,data.activeCategory, activeIndex]);
+  }, [data.location, data.activeCategory, activeIndex]);
 
   return (
     <SideNavLayout>
@@ -69,9 +71,8 @@ const SideNav = () => {
         <SingleNavLink key={item.id} active={activeIndex === index}>
           {item.icon}
           <div
-            className={`text-xl absolute ${activeIndex === index ? "text-[#FF3988]" : "text-white"} ${
-              data.location === "nav" ? "left-16 opacity-100" : "-left-16 opacity-0"
-            } transition-all duration-500 ease-in-out`}
+            className={`text-xl absolute ${activeIndex === index ? "text-[#FF3988]" : "text-white"} ${data.location === "nav" ? "left-16 opacity-100" : "-left-16 opacity-0"
+              } transition-all duration-500 ease-in-out`}
           >
             {item.name}
           </div>

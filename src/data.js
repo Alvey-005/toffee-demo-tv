@@ -119,11 +119,6 @@ export const MovieData = [
         name: 'hello',
         image: './img/11.png'
     },
-    {
-        'id': '12',
-        name: 'hello',
-        image: './img/12.png'
-    },
 ]
 export const TvData = [
     {
@@ -245,14 +240,10 @@ export const TvData = [
         'id': '11',
         name: 'hello',
         image: './img/11.png'
-    },
-    {
-        'id': '12',
-        name: 'hello',
-        image: './img/12.png'
-    },
+    }
 ]
 
 export const serverData = [
     MovieData, TvData , MovieData
 ]
+export const categoryDataName = ['Drama','Movie','LIVE']
