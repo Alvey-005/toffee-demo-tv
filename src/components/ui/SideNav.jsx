@@ -5,7 +5,6 @@ import TvSvg from "../../assets/TvSvg";
 import MovieSvg from "../../assets/MovieSvg";
 import InfoSvg from "../../assets/InfoSvg";
 import { DataContext } from "../../providers/DataProvider";
-import { MovieData, TvData } from "../../data";
 
 const SideNav = () => {
   const { data, setData } = DataContext();
@@ -68,11 +67,13 @@ const SideNav = () => {
   return (
     <SideNavLayout>
       {navItemList.map((item, index) => (
-        <SingleNavLink key={item.id} active={activeIndex === index}>
+        <SingleNavLink key={item.id} active={activeIndex === index} onClick={()=>{setActiveIndex(index);
+          setData({ ...data, activeCategory: index,activeCategoryIndex:0 })
+        }}>
           {item.icon}
           <div
             className={`text-xl absolute ${activeIndex === index ? "text-[#FF3988]" : "text-white"} ${data.location === "nav" ? "left-16 opacity-100" : "-left-16 opacity-0"
-              } transition-all duration-500 ease-in-out`}
+              } transition-all duration-500 ease-in-out hover:text-[#ff3988]/60`}
           >
             {item.name}
           </div>

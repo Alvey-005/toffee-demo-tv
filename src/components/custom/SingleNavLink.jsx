@@ -3,10 +3,10 @@ import clsx from 'clsx';
 import { DataContext } from '../../providers/DataProvider';
 import PropTypes from "prop-types";
 
-const SingleNavLink = ({ children, active }) => {
+const SingleNavLink = ({ children, active,onClick }) => {
     const { data, setData } = DataContext();
     return (
-        <div className="w-full">
+        <div className="nav-link w-full cursor-pointer" onClick={onClick}>
             <div className={clsx(active && `active relative after:content-[""] after:w-[3px] 
             after:h-full after:absolute after:-translate-y-2/4 after:right-0 after:top-2/4 after:bg-[#ff3988]`
             ,'px-[11px] py-[12px]','flex justify-between items-center')} >

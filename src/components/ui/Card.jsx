@@ -1,19 +1,19 @@
 import { serverData } from "../../data";
 import React from "react";
 
-const Card = React.forwardRef(({ index, activeCardIndex, setActiveCardIndex, data }, ref) => {
+const Card = React.forwardRef(({ index, activeCardIndex, data,handleCardClick }, ref) => {
     const isActive = data.location === "movie" && activeCardIndex === index;
     return (
         <div
             ref={ref}
-            className={`card
+            className={`card cursor-pointer
              flex aspect-video transform
               items-center
                justify-center 
                rounded-md bg-gray-200 
                shadow-md transition-transform duration-300 
                `}
-            onClick={() => setActiveCardIndex(index)}
+            onClick={handleCardClick}
         >
             <img
                 src={serverData[data.activeCategory][index].image}

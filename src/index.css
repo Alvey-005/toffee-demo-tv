@@ -10,10 +10,14 @@
 }
 .active > svg,
 .active > svg path {
-  fill: #ff3988; /* Change the color to your desired color */
+  fill: #ff3988;
 }
 .activeCard {
   background: #ff3988;
   border: 6px solid #ff3988;
   transition: all 0.3s ease;
+}
+.nav-link svg:hover,
+.nav-link  svg path:hover{
+  fill: #ff3988;
 }
